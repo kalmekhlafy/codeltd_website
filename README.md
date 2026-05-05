@@ -1,45 +1,59 @@
-# CODE LTD - 3D Splash Page
+# CODE LTD — Coming Soon
 
-A visually stunning, immersive 3D splash page for **CODE LTD**, a SaaS-focused software development company. Built with cutting-edge web technologies to showcase technical expertise and innovation.
+A visually immersive coming-soon splash page for **CODE LTD**, a SaaS-focused software development company. Built with vanilla Three.js + GSAP for a zero-dependency, fast-loading experience.
 
-## 🚀 Tech Stack
-- **Frontend:** React 18 + TypeScript
-- **3D Engine:** Three.js (via React Three Fiber)
-- **Animation:** Framer Motion + Drei ScrollControls
-- **Styling:** Tailwind CSS
-- **Build Tool:** Vite
+## Tech Stack
 
-## 🛠️ Installation & Setup
+- **3D / WebGL:** Three.js r160 (ES module, CDN)
+- **Post-processing:** Three.js EffectComposer — UnrealBloom + film grain/vignette
+- **Animation:** GSAP 3 + ScrollTrigger
+- **Fonts:** Google Fonts (Inter, JetBrains Mono)
+- **Build:** None — single self-contained `index.html`
 
-1. **Clone the repository:**
-   ```bash
-   git clone -b beta3 https://github.com/[username]/codeltd_website.git
-   cd codeltd_website
-   ```
+## Deployment
 
-2. **Install dependencies:**
-   *(Note: Using --legacy-peer-deps to resolve TypeScript version conflicts in some environments)*
-   ```bash
-   npm install --legacy-peer-deps
-   ```
+The entire site is one file: `index.html`. No build step required.
 
-3. **Start development server:**
-   ```bash
-   npm run dev
-   ```
+Deploy to any static host for **codeltd.com**:
 
-## 🏗️ Deployment
-
-To generate the production-ready build:
 ```bash
-npm run build
-```
-The output will be in the `/dist` directory. This can be deployed to any static hosting provider (Vercel, Netlify, AWS S3, etc.) for **codeltd.com**.
+# Vercel (drop the file or connect the repo)
+vercel --prod
 
-## 🎨 Design Philosophy
-- **Immersive 3D:** A central abstract "SaaS Core" that reacts to scroll depth and user interaction.
-- **Micro-interactions:** Smooth transitions and hover states using Framer Motion.
-- **Professional Aesthetics:** A dark, high-contrast theme using the brand's primary orange (`#E8522A`) to communicate technology leadership.
+# Netlify drag-and-drop
+# → netlify.com/drop → drag index.html
+
+# AWS S3 static hosting
+aws s3 cp index.html s3://codeltd.com/index.html --acl public-read
+```
+
+## Development
+
+Open `index.html` directly in a browser, or serve with any static server:
+
+```bash
+npx serve .
+# or
+python3 -m http.server 8080
+```
+
+## Design
+
+- **Brand color:** `#E8522A` (orange) with amber/red accents
+- **Background:** Animated warm radial glow shader + 3500 star particles + 1400 orange dust particles
+- **Scroll:** GSAP ScrollTrigger sticky-panel system — 4 sections over 500vh
+- **Logo:** Pixel/retro 8-bit wordmark, `image-rendering: pixelated`
+- **Cursor:** Custom orange dot + ring with mix-blend-mode screen
+
+## Branch History
+
+| Branch | Description |
+|--------|-------------|
+| beta1  | Initial 3D WebGL sphere concept |
+| beta2  | Full rebrand — orange palette, 4-section scroll, GSAP ScrollTrigger |
+| beta3  | Sphere removed, atmospheric background introduced |
+| beta4  | Polished sphere-free version — current |
 
 ---
+
 © 2026 CODE LTD. All rights reserved.
