@@ -1,14 +1,204 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="https://savoxx.com/media/images/codeltd_logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CODE LTD | SaaS & Software Innovation</title>
-    <meta name="description" content="CODE LTD specializes in premium SaaS products and cutting-edge software development." />
-  </head>
-  <body class="bg-black overflow-x-hidden">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        canvas { position: fixed; top: 0; left: 0; outline: none; z-index: -1; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .text-gradient { background: linear-gradient(to bottom, #fff, #444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #E8522A; border-radius: 10px; }
+        .nav-link { font-size: 10px; tracking: 0.4em; text-transform: uppercase; opacity: 0.5; font-weight: 500; transition: all 0.3s ease; }
+        .nav-link:hover { opacity: 1; color: #E8522A; }
+    </style>
+</head>
+<body>
+    <div id="container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-50">
+        <img src="https://savoxx.com/media/images/codeltd_logo.png" alt="CODE LTD" class="h-8 md:h-10">
+        <div class="hidden md:flex gap-10">
+            <a href="#" class="nav-link">Architecture</a>
+            <a href="#" class="nav-link">Ecosystems</a>
+            <a href="#" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Scroll Content -->
+    <main class="relative z-10">
+        <!-- Section 1: Hero -->
+        <section class="h-screen flex flex-col items-center justify-center text-center px-4">
+            <h1 class="text-6xl md:text-9xl font-black tracking-tighter text-gradient mb-6">SaaS EVOLVED.</h1>
+            <p class="text-[#E8522A] text-xs md:text-sm tracking-[0.7em] uppercase font-bold opacity-80">Engineering the future of enterprise</p>
+            <div class="mt-24 animate-bounce opacity-20">
+                <div class="w-[1px] h-20 bg-white mx-auto"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Architecture -->
+        <section class="h-screen flex items-center justify-center px-6">
+            <div class="glass p-10 md:p-20 rounded-[40px] max-w-5xl w-full grid md:grid-cols-2 gap-16">
+                <div>
+                    <span class="text-[#E8522A] font-mono text-[10px] tracking-[0.4em] uppercase block mb-6">01 // Scalability</span>
+                    <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-8">Architectures that <span class="opacity-30">never sleep.</span></h2>
+                    <p class="text-gray-400 leading-relaxed font-light text-lg">We deliver production-grade SaaS ecosystems designed for hyper-growth, extreme concurrency, and global scale.</p>
+                </div>
+                <div class="flex flex-col justify-center gap-8">
+                    <div class="border-b border-white/10 pb-4 flex justify-between items-center group">
+                        <span class="text-xs tracking-widest uppercase opacity-60 group-hover:opacity-100 transition-opacity">Multi-tenant Security</span>
+                        <span class="text-[#E8522A] opacity-0 group-hover:opacity-100">→</span>
+                    </div>
+                    <div class="border-b border-white/10 pb-4 flex justify-between items-center group">
+                        <span class="text-xs tracking-widest uppercase opacity-60 group-hover:opacity-100 transition-opacity">Edge Computing</span>
+                        <span class="text-[#E8522A] opacity-0 group-hover:opacity-100">→</span>
+                    </div>
+                    <div class="border-b border-white/10 pb-4 flex justify-between items-center group">
+                        <span class="text-xs tracking-widest uppercase opacity-60 group-hover:opacity-100 transition-opacity">Real-time Analytics</span>
+                        <span class="text-[#E8522A] opacity-0 group-hover:opacity-100">→</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Final Call -->
+        <section class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
+            <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                <h2 class="text-[20vw] font-black tracking-tighter">CODELTD</h2>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-bold mb-12 tracking-tight z-10">Ready to scale?</h2>
+            <a href="mailto:hello@codeltd.com" class="z-10 bg-[#E8522A] text-white px-14 py-6 rounded-full font-bold tracking-[0.2em] uppercase hover:scale-105 transition-transform shadow-[0_0_50px_rgba(232,82,42,0.4)]">Start Project</a>
+            <footer class="absolute bottom-12 w-full text-[10px] tracking-[0.4em] uppercase opacity-30">
+                &copy; 2026 CODE LTD &mdash; CODELTD.COM
+            </footer>
+        </section>
+    </main>
+
+    <script>
+        // 3D Scene Setup
+        const container = document.getElementById('container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+        
+        const mainLight = new THREE.PointLight(0xE8522A, 2.5);
+        mainLight.position.set(5, 5, 5);
+        scene.add(mainLight);
+
+        const blueLight = new THREE.PointLight(0x0070f3, 1.5);
+        blueLight.position.set(-5, -5, 5);
+        scene.add(blueLight);
+
+        // Geometry: The SaaS Core (Abstract Octahedron)
+        const geometry = new THREE.OctahedronGeometry(2, 0);
+        const material = new THREE.MeshStandardMaterial({ 
+            color: 0x0a0a0a, 
+            metalness: 1, 
+            roughness: 0.1,
+            emissive: 0xE8522A,
+            emissiveIntensity: 0.15,
+            wireframe: false
+        });
+        const core = new THREE.Mesh(geometry, material);
+        scene.add(core);
+
+        // Wireframe Overlay
+        const wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0xE8522A, wireframe: true, transparent: true, opacity: 0.1 });
+        const coreWireframe = new THREE.Mesh(geometry, wireframeMaterial);
+        coreWireframe.scale.set(1.05, 1.05, 1.05);
+        core.add(coreWireframe);
+
+        // Particles System
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 3000;
+        const posArray = new Float32Array(particlesCount * 3);
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 25;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({ 
+            size: 0.008, 
+            color: 0xE8522A, 
+            transparent: true, 
+            opacity: 0.5,
+            blending: THREE.AdditiveBlending 
+        });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 6;
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            core.rotation.y += 0.004;
+            core.rotation.x += 0.002;
+            particlesMesh.rotation.y += 0.0005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Scroll-driven Animations (GSAP)
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Move core through the space
+        gsap.to(core.position, {
+            z: -3,
+            y: 0.5,
+            x: 1.5,
+            scrollTrigger: {
+                trigger: "main",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5
+            }
+        });
+
+        // Rotate core faster on scroll
+        gsap.to(core.rotation, {
+            y: Math.PI * 3,
+            x: Math.PI,
+            scrollTrigger: {
+                trigger: "main",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 2
+            }
+        });
+
+        // Background color shift
+        gsap.to("body", {
+            backgroundColor: "#0a0503",
+            scrollTrigger: {
+                trigger: "main",
+                start: "50% center",
+                end: "bottom bottom",
+                scrub: true
+            }
+        });
+
+        // Handle Window Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
 </html>
