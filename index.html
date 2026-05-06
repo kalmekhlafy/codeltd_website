@@ -3,86 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CODE LTD — SaaS development company. Building tomorrow's software, today.">
+  <meta name="description" content="CODE LTD — SaaS development company. Coming soon to codeltd.com.">
   <title>CODE LTD — Coming Soon</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root { --orange:#E8522A; --amber:#FF7A3D; --gold:#FFB347; --red:#C42B0B; --bg:#060407; }
-    html, body { background:var(--bg); color:#fff; font-family:'Inter',-apple-system,sans-serif; cursor:none; overflow-x:hidden; }
-    .cursor { position:fixed; width:10px; height:10px; background:var(--orange); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:screen; box-shadow:0 0 12px var(--orange),0 0 28px var(--amber); }
+    html, body { background:var(--bg); color:#fff; font-family:'Inter',-apple-system,sans-serif; cursor:none; overflow:hidden; height:100%; }
+
+    /* Custom cursor */
+    .cursor { position:fixed; width:10px; height:10px; background:var(--orange); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:screen; box-shadow:0 0 12px var(--orange),0 0 28px var(--amber); transition:transform .1s; }
     .cursor-ring { position:fixed; width:36px; height:36px; border:1px solid rgba(232,82,42,.35); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); }
+
+    /* Canvas */
     #canvas { position:fixed; inset:0; width:100%; height:100%; z-index:1; }
-    .scanlines { position:fixed; inset:0; z-index:3; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.02) 2px,rgba(0,0,0,.02) 4px); }
-    .vignette { position:fixed; inset:0; z-index:4; pointer-events:none; background:radial-gradient(ellipse at center,transparent 38%,rgba(6,4,7,.45) 72%,rgba(6,4,7,.92) 100%); }
+    .scanlines { position:fixed; inset:0; z-index:3; pointer-events:none; background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.025) 2px,rgba(0,0,0,.025) 4px); }
+    .vignette { position:fixed; inset:0; z-index:4; pointer-events:none; background:radial-gradient(ellipse at center,transparent 35%,rgba(6,4,7,.5) 68%,rgba(6,4,7,.94) 100%); }
+
+    /* Loader */
     #loader { position:fixed; inset:0; z-index:200; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
-    .ld-logo { width:260px; height:auto; image-rendering:pixelated; opacity:.9; }
-    .ld-track { width:220px; height:1px; background:rgba(255,255,255,.07); }
-    .ld-fill { height:100%; width:0%; background:linear-gradient(to right,var(--red),var(--orange),var(--amber)); box-shadow:0 0 12px var(--orange); transition:width .2s ease; }
-    .ld-label { font-family:'JetBrains Mono',monospace; font-size:.65rem; letter-spacing:.22em; color:rgba(255,255,255,.25); }
-    .nav { position:fixed; top:0; left:0; width:100%; padding:1.8rem 3rem; display:flex; align-items:center; justify-content:space-between; z-index:50; }
-    .nav-logo { opacity:0; cursor:pointer; }
-    .nav-logo img { height:28px; width:auto; image-rendering:pixelated; }
-    .nav-right { display:flex; gap:2.5rem; }
-    .nav-link { font-size:.72rem; font-weight:400; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.38); text-decoration:none; opacity:0; transition:color .3s; cursor:pointer; }
-    .nav-link:hover { color:var(--amber); }
-    #scroll-wrap { height:500vh; position:relative; z-index:10; }
-    #sticky { position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; pointer-events:none; overflow:hidden; }
-    .panel { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; }
-    .panel.active { pointer-events:all; }
-    .hero { flex-direction:column; text-align:center; }
-    .hero-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.7rem; letter-spacing:.45em; text-transform:uppercase; color:var(--amber); margin-bottom:2rem; }
-    .hero-logo { width:min(500px,76vw); height:auto; image-rendering:pixelated; }
-    .hero-tagline { font-size:clamp(1rem,2.4vw,1.5rem); font-weight:200; letter-spacing:.1em; color:rgba(255,255,255,.42); margin-top:1.6rem; }
+    .ld-logo { width:240px; height:auto; image-rendering:pixelated; opacity:.9; }
+    .ld-track { width:200px; height:1px; background:rgba(255,255,255,.07); }
+    .ld-fill { height:100%; width:0%; background:linear-gradient(to right,var(--red),var(--orange),var(--amber)); box-shadow:0 0 10px var(--orange); }
+    .ld-label { font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.22em; color:rgba(255,255,255,.22); }
+
+    /* Nav */
+    .nav { position:fixed; top:0; left:0; width:100%; padding:1.8rem 3rem; display:flex; align-items:center; justify-content:space-between; z-index:50; opacity:0; }
+    .nav-logo img { height:26px; width:auto; image-rendering:pixelated; }
+    .nav-logo-text { font-weight:900; letter-spacing:.3em; font-size:.85rem; color:var(--orange); }
+    .nav-contact { font-size:.7rem; font-weight:400; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.35); text-decoration:none; transition:color .3s; }
+    .nav-contact:hover { color:var(--amber); }
+
+    /* Hero */
+    #hero { position:fixed; inset:0; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 2rem; pointer-events:none; }
+    .hero-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.5em; text-transform:uppercase; color:var(--amber); margin-bottom:2.4rem; opacity:0; }
+    .hero-logo { width:min(460px,72vw); height:auto; image-rendering:pixelated; opacity:0; }
+    .hero-logo-text { font-size:clamp(3.5rem,12vw,8rem); font-weight:900; letter-spacing:.08em; color:var(--orange); opacity:0; line-height:1; }
+    .hero-tagline { font-size:clamp(.95rem,2.2vw,1.35rem); font-weight:200; letter-spacing:.1em; color:rgba(255,255,255,.4); margin-top:1.8rem; opacity:0; }
     .hero-tagline em { font-style:normal; color:var(--amber); font-weight:400; }
-    .hero-sep { width:1px; height:56px; background:linear-gradient(to bottom,transparent,rgba(232,82,42,.5),transparent); margin:1.8rem auto; }
-    .hero-cta { display:flex; align-items:center; gap:.8rem; }
-    .hero-dot { width:7px; height:7px; border-radius:50%; background:var(--orange); box-shadow:0 0 8px var(--orange),0 0 20px var(--amber); animation:dot-pulse 2.2s ease-in-out infinite; }
-    @keyframes dot-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.7);opacity:.4} }
-    .hero-cta-text { font-size:.7rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(255,255,255,.35); }
-    .scroll-hint { position:absolute; bottom:3rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.6rem; opacity:0; }
-    .scroll-hint span { font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.2); }
-    .scroll-arrow { width:1px; height:36px; background:linear-gradient(to bottom,rgba(232,82,42,.5),transparent); animation:arrow-drop 2s ease-in-out infinite; }
-    @keyframes arrow-drop { 0%{transform:scaleY(0);transform-origin:top;opacity:1} 50%{transform:scaleY(1);opacity:1} 100%{transform:scaleY(1);opacity:0} }
-    .caps { flex-direction:row; gap:6vw; padding:0 6vw; max-width:1100px; width:100%; }
-    .caps-left { flex:1; }
-    .caps-label { font-family:'JetBrains Mono',monospace; font-size:.65rem; letter-spacing:.4em; text-transform:uppercase; color:var(--amber); margin-bottom:1.5rem; }
-    .caps-heading { font-size:clamp(2.2rem,5vw,3.8rem); font-weight:800; line-height:1.08; letter-spacing:-.02em; }
-    .caps-heading span { color:var(--orange); }
-    .caps-body { font-size:1rem; font-weight:300; line-height:1.75; color:rgba(255,255,255,.42); margin-top:1.5rem; max-width:38ch; }
-    .caps-right { flex:1; display:flex; flex-direction:column; gap:1.6rem; }
-    .stat-item { border-top:1px solid rgba(232,82,42,.2); padding-top:1.2rem; }
-    .stat-num { font-size:clamp(2rem,4vw,3rem); font-weight:900; color:var(--orange); letter-spacing:-.02em; }
-    .stat-label { font-size:.78rem; font-weight:300; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.32); margin-top:.3rem; }
-    .services { flex-direction:column; text-align:center; max-width:920px; width:100%; padding:0 4vw; }
-    .services-label { font-family:'JetBrains Mono',monospace; font-size:.65rem; letter-spacing:.4em; text-transform:uppercase; color:var(--amber); margin-bottom:1.5rem; }
-    .services-heading { font-size:clamp(2rem,5vw,3.5rem); font-weight:800; letter-spacing:-.02em; line-height:1.1; }
-    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2.8rem; }
-    .service-card { border:1px solid rgba(232,82,42,.16); padding:1.8rem 1.4rem; border-radius:4px; background:rgba(232,82,42,.04); transition:border-color .3s,background .3s; pointer-events:all; }
-    .service-card:hover { border-color:rgba(232,82,42,.42); background:rgba(232,82,42,.08); }
-    .sc-icon { font-size:1.7rem; margin-bottom:1rem; }
-    .sc-title { font-size:.9rem; font-weight:600; color:rgba(255,255,255,.85); margin-bottom:.55rem; }
-    .sc-desc { font-size:.77rem; font-weight:300; line-height:1.65; color:rgba(255,255,255,.32); }
-    .cta-panel { flex-direction:column; text-align:center; padding:0 4vw; }
-    .cta-label { font-family:'JetBrains Mono',monospace; font-size:.65rem; letter-spacing:.4em; text-transform:uppercase; color:var(--amber); margin-bottom:1.8rem; }
-    .cta-heading { font-size:clamp(2.5rem,7vw,6rem); font-weight:900; line-height:.95; letter-spacing:-.03em; }
-    .cta-heading .grad { background:linear-gradient(135deg,var(--orange),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .cta-sub { font-size:1rem; font-weight:300; line-height:1.7; color:rgba(255,255,255,.4); margin-top:1.5rem; max-width:48ch; margin-left:auto; margin-right:auto; }
-    .cta-form { display:flex; gap:0; margin-top:2.8rem; max-width:440px; width:100%; margin-left:auto; margin-right:auto; pointer-events:all; }
-    .cta-input { flex:1; padding:.85rem 1.2rem; background:rgba(255,255,255,.05); border:1px solid rgba(232,82,42,.28); border-right:none; color:#fff; font-family:'Inter',sans-serif; font-size:.88rem; outline:none; border-radius:3px 0 0 3px; transition:border-color .3s; }
-    .cta-input::placeholder { color:rgba(255,255,255,.22); }
-    .cta-input:focus { border-color:var(--orange); }
-    .cta-btn { padding:.85rem 1.8rem; background:var(--orange); border:1px solid var(--orange); color:#fff; font-family:'Inter',sans-serif; font-size:.82rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; border-radius:0 3px 3px 0; transition:background .3s,border-color .3s; }
-    .cta-btn:hover { background:var(--amber); border-color:var(--amber); }
-    .cta-domain { font-family:'JetBrains Mono',monospace; font-size:.75rem; letter-spacing:.22em; color:rgba(255,255,255,.2); margin-top:2rem; }
-    .cta-domain em { font-style:normal; color:var(--amber); }
-    .bottom { position:fixed; bottom:0; left:0; width:100%; padding:1.6rem 3rem; display:flex; align-items:center; justify-content:space-between; z-index:50; opacity:0; }
-    .bottom span { font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.14em; color:rgba(255,255,255,.18); }
-    .s-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#00ff88; margin-right:.5rem; box-shadow:0 0 6px #00ff88; animation:dot-pulse 2s ease-in-out infinite; }
-    .progress-bar { position:fixed; top:0; left:0; width:0%; height:2px; background:linear-gradient(to right,var(--red),var(--orange),var(--amber)); z-index:100; opacity:0; box-shadow:0 0 8px var(--orange); }
-    @media(max-width:768px){ .caps{flex-direction:column;gap:3rem} .services-grid{grid-template-columns:1fr} .nav{padding:1.4rem 1.5rem} .bottom{padding:1.2rem 1.5rem} .bottom .mid{display:none} }
+    .hero-sep { width:1px; height:52px; background:linear-gradient(to bottom,transparent,rgba(232,82,42,.45),transparent); margin:1.8rem auto; opacity:0; }
+
+    /* Coming soon badge */
+    .hero-badge { display:flex; align-items:center; gap:.75rem; opacity:0; margin-bottom:2.4rem; }
+    .badge-dot { width:7px; height:7px; border-radius:50%; background:var(--orange); box-shadow:0 0 8px var(--orange),0 0 20px var(--amber); flex-shrink:0; animation:pulse 2.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.7);opacity:.4} }
+    .badge-text { font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(255,255,255,.32); }
+
+    /* Email form */
+    .hero-form { display:flex; gap:0; width:min(420px,88vw); opacity:0; pointer-events:all; }
+    .hero-input { flex:1; padding:.82rem 1.1rem; background:rgba(255,255,255,.05); border:1px solid rgba(232,82,42,.3); border-right:none; color:#fff; font-family:'Inter',sans-serif; font-size:.86rem; outline:none; border-radius:3px 0 0 3px; transition:border-color .3s; }
+    .hero-input::placeholder { color:rgba(255,255,255,.2); }
+    .hero-input:focus { border-color:var(--orange); }
+    .hero-btn { padding:.82rem 1.6rem; background:var(--orange); border:1px solid var(--orange); color:#fff; font-family:'Inter',sans-serif; font-size:.8rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; border-radius:0 3px 3px 0; transition:background .25s,border-color .25s; white-space:nowrap; }
+    .hero-btn:hover { background:var(--amber); border-color:var(--amber); }
+
+    /* Bottom bar */
+    .bottom { position:fixed; bottom:0; left:0; width:100%; padding:1.5rem 3rem; display:flex; align-items:center; justify-content:space-between; z-index:50; opacity:0; }
+    .bottom span { font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:.14em; color:rgba(255,255,255,.16); }
+    .s-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#00ff88; margin-right:.45rem; box-shadow:0 0 6px #00ff88; animation:pulse 2s ease-in-out infinite; }
+
+    @media(max-width:600px) {
+      .nav { padding:1.2rem 1.5rem; }
+      .bottom { padding:1rem 1.5rem; }
+      .bottom .mid { display:none; }
+      .hero-form { flex-direction:column; }
+      .hero-input { border-right:1px solid rgba(232,82,42,.3); border-bottom:none; border-radius:3px 3px 0 0; }
+      .hero-btn { border-radius:0 0 3px 3px; }
+    }
   </style>
 </head>
 <body>
@@ -90,96 +79,54 @@
 <div id="loader">
   <img class="ld-logo" src="https://savoxx.com/media/images/codeltd_logo.png" alt="CODE LTD"
        onerror="this.style.display='none';document.getElementById('ld-fb').style.display='block'">
-  <div id="ld-fb" style="display:none;font-size:2rem;font-weight:900;letter-spacing:.3em;color:#E8522A">CODE LTD</div>
+  <div id="ld-fb" style="display:none;font-size:1.8rem;font-weight:900;letter-spacing:.3em;color:#E8522A">CODE LTD</div>
   <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
   <div class="ld-label" id="ll">Loading…</div>
 </div>
 
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="curR"></div>
+<canvas id="canvas"></canvas>
 <div class="scanlines"></div>
 <div class="vignette"></div>
-<canvas id="canvas"></canvas>
-<div class="progress-bar" id="prog"></div>
 
-<nav class="nav">
-  <div class="nav-logo" id="nLogo">
+<nav class="nav" id="nav">
+  <div id="navLogo">
     <img src="https://savoxx.com/media/images/codeltd_logo.png" alt="CODE LTD"
-         onerror="this.parentNode.innerHTML='<span style=&quot;font-weight:900;letter-spacing:.3em;font-size:.85rem;color:#E8522A&quot;>CODE LTD</span>'">
+         onerror="this.outerHTML='<span class=nav-logo-text>CODE LTD</span>'">
   </div>
-  <div class="nav-right">
-    <a class="nav-link" id="nServices" href="#s3">Services</a>
-    <a class="nav-link" id="nContact" href="mailto:hello@codeltd.com">Contact</a>
-  </div>
+  <a class="nav-contact" href="mailto:hello@codeltd.com">Contact</a>
 </nav>
 
-<div id="scroll-wrap">
-  <div id="sticky">
+<section id="hero">
+  <div class="hero-eyebrow" id="eyebrow">SaaS · Software Development · Innovation</div>
 
-    <div class="panel hero" id="p1">
-      <div class="hero-eyebrow">SaaS · Software Development · Innovation</div>
-      <img class="hero-logo" src="https://savoxx.com/media/images/codeltd_logo.png" alt="CODE LTD"
-           onerror="this.outerHTML='<h1 style=&quot;font-size:clamp(3rem,10vw,8rem);font-weight:900;letter-spacing:.08em;color:#E8522A&quot;>CODE LTD</h1>'">
-      <div class="hero-tagline">Crafting <em>tomorrow&#39;s software</em>, shipped today</div>
-      <div class="hero-sep"></div>
-      <div class="hero-cta">
-        <div class="hero-dot"></div>
-        <span class="hero-cta-text">Launching Soon — codeltd.com</span>
-      </div>
-      <div class="scroll-hint" id="scrollHint">
-        <span>Scroll</span>
-        <div class="scroll-arrow"></div>
-      </div>
-    </div>
+  <img class="hero-logo" id="heroLogo" src="https://savoxx.com/media/images/codeltd_logo.png" alt="CODE LTD"
+       onerror="this.outerHTML='<div class=hero-logo-text id=heroLogo>CODE LTD</div>'">
 
-    <div class="panel caps" id="p2">
-      <div class="caps-left">
-        <div class="caps-label">Why CODE LTD</div>
-        <h2 class="caps-heading">We build SaaS<br>that <span>actually</span><br>scales.</h2>
-        <p class="caps-body">From concept to cloud — we design, architect and deliver robust SaaS products trusted by teams worldwide. Speed without sacrificing quality.</p>
-      </div>
-      <div class="caps-right">
-        <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Products Shipped</div></div>
-        <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Countries Served</div></div>
-        <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Uptime Delivered</div></div>
-      </div>
-    </div>
-
-    <div class="panel services" id="p3">
-      <div class="services-label" id="s3">What We Build</div>
-      <h2 class="services-heading">End-to-end SaaS<br>development.</h2>
-      <div class="services-grid">
-        <div class="service-card"><div class="sc-icon">&#9889;</div><div class="sc-title">SaaS Architecture</div><div class="sc-desc">Multi-tenant systems designed for scale from day one. Microservices, event-driven, cloud-native.</div></div>
-        <div class="service-card"><div class="sc-icon">&#127912;</div><div class="sc-title">Product Design</div><div class="sc-desc">Research-driven UX and pixel-perfect interfaces that convert users into loyal customers.</div></div>
-        <div class="service-card"><div class="sc-icon">&#128268;</div><div class="sc-title">API &amp; Integrations</div><div class="sc-desc">RESTful and GraphQL APIs built for developers. Seamless third-party integrations at any scale.</div></div>
-        <div class="service-card"><div class="sc-icon">&#9729;&#65039;</div><div class="sc-title">Cloud Infrastructure</div><div class="sc-desc">AWS, GCP, Azure — automated CI/CD pipelines, IaC, and zero-downtime deployments.</div></div>
-        <div class="service-card"><div class="sc-icon">&#128274;</div><div class="sc-title">Security &amp; Compliance</div><div class="sc-desc">SOC 2, GDPR, and ISO-ready architectures. Security baked in, not bolted on.</div></div>
-        <div class="service-card"><div class="sc-icon">&#128200;</div><div class="sc-title">Growth Engineering</div><div class="sc-desc">Analytics, A/B testing, and feature flags that let your product team move fast safely.</div></div>
-      </div>
-    </div>
-
-    <div class="panel cta-panel" id="p4">
-      <div class="cta-label">Let&#39;s Build Together</div>
-      <h2 class="cta-heading">Your next<br><span class="grad">big product</span><br>starts here.</h2>
-      <p class="cta-sub">Get early access when we launch. Be the first to know when codeltd.com goes live.</p>
-      <form class="cta-form" onsubmit="handleSubmit(event)">
-        <input class="cta-input" type="email" placeholder="your@email.com" required>
-        <button class="cta-btn" type="submit">Notify Me</button>
-      </form>
-      <div class="cta-domain"><em>&#8594;</em>&nbsp; codeltd.com — launching 2025</div>
-    </div>
-
+  <div class="hero-tagline" id="tagline">
+    Crafting <em>tomorrow's software</em>, shipped today
   </div>
-</div>
+  <div class="hero-sep" id="sep"></div>
+
+  <div class="hero-badge" id="badge">
+    <div class="badge-dot"></div>
+    <span class="badge-text">Launching Soon — codeltd.com</span>
+  </div>
+
+  <form class="hero-form" id="heroForm" onsubmit="handleSubmit(event)">
+    <input class="hero-input" type="email" placeholder="your@email.com" required>
+    <button class="hero-btn" type="submit">Notify Me</button>
+  </form>
+</section>
 
 <div class="bottom" id="bot">
   <span><span class="s-dot"></span>Systems Online</span>
-  <span class="mid">&#169; 2025 CODE LTD. All rights reserved.</span>
+  <span class="mid">© 2026 CODE LTD. All rights reserved.</span>
   <span>codeltd.com</span>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
@@ -192,38 +139,36 @@ import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { ShaderPass }      from 'three/addons/postprocessing/ShaderPass.js';
 
-gsap.registerPlugin(ScrollTrigger);
-
-/* ── Background warm radial glow shader ── */
+/* ── Background warm radial glow ── */
 const bgMat = new THREE.ShaderMaterial({
-  uniforms: { uTime:{value:0}, uScroll:{value:0} },
-  vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
-  fragmentShader: `
+  uniforms: { uTime:{value:0} },
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader:`
     precision mediump float;
     varying vec2 vUv;
-    uniform float uTime, uScroll;
+    uniform float uTime;
     void main(){
-      vec2 c=vUv-.5; c.x*=1.8;
+      vec2 c=vUv-.5; c.x*=1.75;
       float d=length(c);
-      float pulse=sin(uTime*.22)*.025+sin(uTime*.13+1.3)*.015;
-      float r=.28+pulse-uScroll*.1;
-      float core=smoothstep(r+.4,r-.05,d);
-      float haze=smoothstep(.8,.0,d)*.16;
-      vec3 col=mix(vec3(.012,.008,.02),vec3(.22,.055,.012),core+haze);
-      col+=vec3(.18,.04,.01)*sin(d*14.-uTime*.4)*.012*(1.-d);
+      float pulse=sin(uTime*.2)*.03+sin(uTime*.11+1.4)*.018;
+      float r=.3+pulse;
+      float core=smoothstep(r+.38,r-.05,d);
+      float haze=smoothstep(.78,.0,d)*.18;
+      vec3 col=mix(vec3(.012,.008,.02),vec3(.2,.05,.01),core+haze);
+      col+=vec3(.15,.035,.008)*sin(d*13.-uTime*.35)*.013*(1.-d);
       gl_FragColor=vec4(col,1.);
     }
   `,
-  depthWrite: false,
+  depthWrite:false,
 });
 const bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(30,18), bgMat);
 bgPlane.position.z = -4;
 
-/* ── Film grain pass ── */
+/* ── Film grain ── */
 const filmShader = {
-  uniforms: { tDiffuse:{value:null}, uTime:{value:0} },
-  vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
-  fragmentShader: `
+  uniforms:{ tDiffuse:{value:null}, uTime:{value:0} },
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader:`
     precision highp float;
     varying vec2 vUv;
     uniform sampler2D tDiffuse;
@@ -231,14 +176,14 @@ const filmShader = {
     float rand(vec2 c){ return fract(sin(dot(c,vec2(12.9898,78.233)))*43758.5453); }
     void main(){
       vec4 c=texture2D(tDiffuse,vUv);
-      c.rgb+=(rand(vUv+uTime*.07)-.5)*.022;
-      c.rgb*=smoothstep(.9,.15,length(vUv-.5)*.9);
+      c.rgb+=(rand(vUv+uTime*.07)-.5)*.02;
+      c.rgb*=smoothstep(.9,.14,length(vUv-.5)*.88);
       gl_FragColor=c;
     }
   `
 };
 
-/* ── Scene ── */
+/* ── Scene setup ── */
 const canvas   = document.getElementById('canvas');
 const scene    = new THREE.Scene();
 const cam      = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, .1, 200);
@@ -246,41 +191,38 @@ cam.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
 renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.toneMapping       = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping        = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
 
 scene.add(bgPlane);
 
 /* Stars */
 const sp = new Float32Array(3500*3);
 for(let i=0;i<3500;i++){
-  const r=12+Math.random()*30, th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1);
+  const r=13+Math.random()*28, th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1);
   sp[i*3]=r*Math.sin(ph)*Math.cos(th); sp[i*3+1]=r*Math.sin(ph)*Math.sin(th); sp[i*3+2]=r*Math.cos(ph);
 }
-const starGeo = new THREE.BufferGeometry();
-starGeo.setAttribute('position', new THREE.BufferAttribute(sp,3));
-const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color:0xFFE4C8, size:.025, transparent:true, opacity:.5, sizeAttenuation:true }));
+const starGeo=new THREE.BufferGeometry(); starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
+const stars=new THREE.Points(starGeo, new THREE.PointsMaterial({color:0xFFE4C8,size:.024,transparent:true,opacity:.48,sizeAttenuation:true}));
 scene.add(stars);
 
 /* Floating dust */
 const dp = new Float32Array(1400*3);
 for(let i=0;i<1400;i++){
-  dp[i*3]=(Math.random()-.5)*20; dp[i*3+1]=(Math.random()-.5)*12; dp[i*3+2]=(Math.random()-.5)*10-1;
+  dp[i*3]=(Math.random()-.5)*22; dp[i*3+1]=(Math.random()-.5)*13; dp[i*3+2]=(Math.random()-.5)*10-1;
 }
-const dustGeo = new THREE.BufferGeometry();
-dustGeo.setAttribute('position', new THREE.BufferAttribute(dp,3));
-const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color:0xE8522A, size:.016, transparent:true, opacity:.28, sizeAttenuation:true }));
+const dustGeo=new THREE.BufferGeometry(); dustGeo.setAttribute('position',new THREE.BufferAttribute(dp,3));
+const dust=new THREE.Points(dustGeo, new THREE.PointsMaterial({color:0xE8522A,size:.015,transparent:true,opacity:.26,sizeAttenuation:true}));
 scene.add(dust);
 
 /* Post-processing */
-const composer = new EffectComposer(renderer);
+const composer=new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene,cam));
-composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight), .55, .5, .92));
-const film = new ShaderPass(filmShader);
-composer.addPass(film);
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.5,.45,.9));
+const film=new ShaderPass(filmShader); composer.addPass(film);
 
-/* Mouse */
+/* Mouse tracking */
 const cur=document.getElementById('cur'), curR=document.getElementById('curR');
 const mouse={x:0,y:0,sx:0,sy:0};
 window.addEventListener('mousemove',e=>{
@@ -290,9 +232,6 @@ window.addEventListener('mousemove',e=>{
   gsap.to(curR,{x:e.clientX,y:e.clientY,duration:.26});
 });
 
-/* Scroll state */
-const S={camZ:5, scroll:0};
-
 /* Render loop */
 const clock=new THREE.Clock();
 (function tick(){
@@ -300,14 +239,12 @@ const clock=new THREE.Clock();
   const t=clock.getElapsedTime();
   mouse.sx+=(mouse.x-mouse.sx)*.04;
   mouse.sy+=(mouse.y-mouse.sy)*.04;
-  cam.position.z=S.camZ;
-  cam.position.x+=(mouse.sx*.22-cam.position.x)*.045;
-  cam.position.y+=(mouse.sy*.15-cam.position.y)*.045;
+  cam.position.x+=(mouse.sx*.2 -cam.position.x)*.045;
+  cam.position.y+=(mouse.sy*.13-cam.position.y)*.045;
   bgMat.uniforms.uTime.value=t;
-  bgMat.uniforms.uScroll.value=S.scroll;
-  stars.rotation.y=t*.006; stars.rotation.x=t*.0025;
-  dust.rotation.y=-t*.011; dust.rotation.z=t*.007;
   film.uniforms.uTime.value=t;
+  stars.rotation.y=t*.006; stars.rotation.x=t*.0022;
+  dust.rotation.y=-t*.011; dust.rotation.z=t*.007;
   composer.render();
 })();
 
@@ -318,80 +255,47 @@ window.addEventListener('resize',()=>{
   composer.setSize(innerWidth,innerHeight);
 });
 
-/* Scroll system */
-function initScroll(){
-  const wrap=document.getElementById('scroll-wrap');
-  const prog=document.getElementById('prog');
-  const vh=()=>window.innerHeight;
-
-  gsap.to(prog,{width:'100%',ease:'none',scrollTrigger:{trigger:wrap,start:'top top',end:'bottom bottom',scrub:.5}});
-
-  ['p1','p2','p3','p4'].forEach((id,i)=>{
-    const el=document.getElementById(id);
-    ScrollTrigger.create({
-      trigger:wrap,
-      start:()=>`top+=${i*vh()}px top`,
-      end:()=>`top+=${(i+1)*vh()}px top`,
-      invalidateOnRefresh:true,
-      onEnter:     ()=>{gsap.to(el,{opacity:1,duration:.55,ease:'power2.out'});el.classList.add('active');},
-      onLeave:     ()=>{gsap.to(el,{opacity:0,duration:.35});el.classList.remove('active');},
-      onEnterBack: ()=>{gsap.to(el,{opacity:1,duration:.55,ease:'power2.out'});el.classList.add('active');},
-      onLeaveBack: ()=>{gsap.to(el,{opacity:0,duration:.35});el.classList.remove('active');},
-    });
-  });
-
-  /* Camera pulls back + background cools as user scrolls */
-  gsap.to(S,{camZ:7.5,scroll:1,ease:'none',scrollTrigger:{trigger:wrap,start:'top top',end:'bottom bottom',scrub:2,invalidateOnRefresh:true}});
-
-  gsap.to('#scrollHint',{opacity:0,y:-10,scrollTrigger:{trigger:wrap,start:()=>`top+=${.06*vh()}px top`,end:()=>`top+=${.22*vh()}px top`,invalidateOnRefresh:true,scrub:true}});
-}
-
-/* Loader */
-const lf=document.getElementById('lf'),ll=document.getElementById('ll'),loader=document.getElementById('loader');
-const msgs=['Loading assets…','Building scene…','Preparing experience…','Almost ready…'];
-let prog2=0,mi=0;
+/* ── Loader ── */
+const lf=document.getElementById('lf'), ll=document.getElementById('ll'), loader=document.getElementById('loader');
+const msgs=['Initializing…','Loading assets…','Building scene…','Almost ready…'];
+let pct=0, mi=0;
 const loadTick=setInterval(()=>{
-  prog2+=Math.random()*24+6;
-  if(prog2>100)prog2=100;
-  lf.style.width=prog2+'%';
+  pct+=Math.random()*22+7;
+  if(pct>100)pct=100;
+  lf.style.width=pct+'%';
   ll.textContent=msgs[Math.min(mi++,msgs.length-1)];
-  if(prog2>=100){
+  if(pct>=100){
     clearInterval(loadTick);
     setTimeout(()=>{
-      gsap.to(loader,{opacity:0,duration:.65,ease:'power2.inOut',onComplete:()=>{loader.style.display='none';intro();}});
-    },350);
+      gsap.to(loader,{opacity:0,duration:.6,ease:'power2.inOut',onComplete:()=>{loader.style.display='none'; intro();}});
+    },300);
   }
-},200);
+},180);
 
+/* ── Intro animation ── */
 function intro(){
-  document.getElementById('p1').classList.add('active');
   const tl=gsap.timeline({defaults:{ease:'power3.out'}});
   tl
-    .to('#nLogo',   {opacity:1,duration:.8},0)
-    .to('#nServices',{opacity:1,duration:.8},.1)
-    .to('#nContact', {opacity:1,duration:.8},.18)
-    .to('#bot',      {opacity:1,duration:.8},.25)
-    .to('#prog',     {opacity:1,duration:.6},.3)
-    .to('#p1',       {opacity:1,duration:.1},0)
-    .fromTo('#p1 .hero-eyebrow',{opacity:0,y:16},{opacity:1,y:0,duration:.8},.4)
-    .fromTo('#p1 .hero-logo',{opacity:0,y:48,scale:.95},{opacity:1,y:0,scale:1,duration:1.1,ease:'power4.out'},.55)
-    .fromTo('#p1 .hero-tagline',{opacity:0,y:14},{opacity:1,y:0,duration:.8},.95)
-    .fromTo('#p1 .hero-sep',{opacity:0,scaleY:0},{opacity:1,scaleY:1,duration:.65,transformOrigin:'top'},1.15)
-    .fromTo('#p1 .hero-cta',{opacity:0,y:10},{opacity:1,y:0,duration:.6},1.35)
-    .fromTo('#scrollHint',{opacity:0,y:8},{opacity:1,y:0,duration:.55},1.7);
-  tl.call(initScroll,null,2.0);
+    .to('#nav',   {opacity:1,duration:.7},0)
+    .to('#bot',   {opacity:1,duration:.7},.1)
+    .fromTo('#eyebrow', {opacity:0,y:14},{opacity:1,y:0,duration:.75},.35)
+    .fromTo('#heroLogo',{opacity:0,y:44,scale:.94},{opacity:1,y:0,scale:1,duration:1.1,ease:'power4.out'},.52)
+    .fromTo('#tagline', {opacity:0,y:12},{opacity:1,y:0,duration:.75},.9)
+    .fromTo('#sep',     {opacity:0,scaleY:0},{opacity:1,scaleY:1,duration:.6,transformOrigin:'top'},1.1)
+    .fromTo('#badge',   {opacity:0,y:8}, {opacity:1,y:0,duration:.6},1.28)
+    .fromTo('#heroForm',{opacity:0,y:8}, {opacity:1,y:0,duration:.6},1.46);
 }
 </script>
 
 <script>
 function handleSubmit(e){
   e.preventDefault();
-  const btn=e.target.querySelector('.cta-btn');
-  btn.textContent='✓ Noted!';
+  const btn=e.target.querySelector('.hero-btn');
+  btn.textContent='✓ You\'re on the list!';
   btn.style.background='#00cc77';
   btn.style.borderColor='#00cc77';
-  e.target.querySelector('.cta-input').value='';
-  setTimeout(()=>{btn.textContent='Notify Me';btn.style.background='';btn.style.borderColor='';},3000);
+  e.target.querySelector('.hero-input').value='';
+  setTimeout(()=>{btn.textContent='Notify Me';btn.style.background='';btn.style.borderColor='';},3500);
 }
 </script>
 </body>
